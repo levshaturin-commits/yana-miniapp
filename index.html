@@ -18,7 +18,7 @@
     .card{background:var(--tg-theme-secondary-bg-color,var(--card));border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 8px 28px rgba(0,0,0,.05)}
     h1,h2{margin:0 0 16px;line-height:1.1} h1{font-size:34px} h2{font-size:27px}
     p{font-size:17px;line-height:1.55;margin:0 0 15px}
-    .lead{font-size:18px;color:var(--muted)} .lead strong{color:var(--text)}
+    .lead{font-size:19px;color:var(--muted);line-height:1.6}.lead strong{color:var(--text);font-size:21px;line-height:1.4}.start-brand{margin-bottom:18px}.result-kicker{font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
     .answers{display:grid;gap:11px;margin-top:22px}
     .answer,.primary,.secondary{width:100%;border-radius:16px;padding:16px 17px;cursor:pointer;transition:.15s ease}
     .answer{border:1px solid transparent;background:var(--accent-soft);color:var(--text);text-align:left;font-size:16px;line-height:1.35}
@@ -33,15 +33,15 @@
 <body>
 <main class="app">
   <section id="start" class="card fade">
-    <div class="brand">Исследование Яны Шатуриной</div>
+    <div class="brand start-brand">Исследование вашей уникальности</div>
     <h1>Исследуйте себя настоящую и стартаните, наконец!</h1>
-    <p class="lead"><strong>Почему вы всё ещё не делаете то, чего давно хотите?</strong><br><br>Ответьте на 7 простых вопросов, чтобы понять: вы реально не готовы, задолбались по жизни, или ссыте и заговариваете себе зубы?</p>
+    <p class="lead"><strong>Почему вы всё ещё не делаете то, чего давно хотите?<br>Почему топчетесь на месте?</strong><br><br>Ответьте на 7 простых вопросов, чтобы понять: вы реально не готовы, задолбались по жизни, или ссыте и заговариваете себе зубы?</p>
     <button class="primary" id="startBtn">Поехали</button>
     <div class="note">Займёт около 3 минут</div>
   </section>
 
   <section id="quiz" class="hidden">
-    <div class="top"><div class="brand">Исследование</div><div id="progressLabel" class="progress-label"></div></div>
+    <div class="top"><div class="brand">Yana_Shaturina</div><div id="progressLabel" class="progress-label"></div></div>
     <div class="progress"><div id="progressBar"></div></div>
     <div class="card fade" id="questionCard">
       <h2 id="questionTitle"></h2>
@@ -50,6 +50,7 @@
   </section>
 
   <section id="result" class="card hidden fade">
+    <div class="result-kicker">Результат</div>
     <h2 id="resultTitle"></h2>
     <div id="resultText"></div>
     <button class="primary" id="detailsBtn">Вернуться в канал и подписаться</button>
