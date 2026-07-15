@@ -1,315 +1,189 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Диагностика</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Исследование Яны Шатуриной</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
-    :root{
-      --bg:#f7f7f4;
-      --card:#ffffff;
-      --text:#171717;
-      --muted:#77756f;
-      --line:#e6e4de;
-      --accent:#2397a5;
-      --accent-soft:#e8f5f6;
-      --danger:#e86672;
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:var(--tg-theme-bg-color,var(--bg));color:var(--tg-theme-text-color,var(--text))}
-    body{min-height:100vh}
-    button,a{font:inherit}
+    :root{--bg:#f7f7f4;--card:#fff;--text:#171717;--muted:#74716b;--line:#e5e3dc;--accent:#2298a5;--accent-soft:#e9f6f7}
+    *{box-sizing:border-box} html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:var(--tg-theme-bg-color,var(--bg));color:var(--tg-theme-text-color,var(--text))}
+    body{min-height:100vh} button,a{font:inherit}
     .app{width:min(100%,680px);margin:0 auto;min-height:100vh;padding:18px 16px 32px}
     .top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
     .brand{font-size:13px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}
     .progress-label{font-size:13px;color:var(--muted)}
     .progress{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:22px}
-    .progress > div{height:100%;width:0;background:var(--accent);transition:width .25s ease}
+    .progress>div{height:100%;width:0;background:var(--accent);transition:width .2s ease}
     .card{background:var(--tg-theme-secondary-bg-color,var(--card));border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 8px 28px rgba(0,0,0,.05)}
-    h1,h2{margin:0 0 16px;line-height:1.08}
-    h1{font-size:34px}
-    h2{font-size:27px}
+    h1,h2{margin:0 0 16px;line-height:1.1} h1{font-size:34px} h2{font-size:27px}
     p{font-size:17px;line-height:1.55;margin:0 0 15px}
-    .lead{font-size:19px;color:var(--muted)}
+    .lead{font-size:18px;color:var(--muted)} .lead strong{color:var(--text)}
     .answers{display:grid;gap:11px;margin-top:22px}
-    .answer,.primary,.secondary{
-      width:100%;border:0;border-radius:16px;padding:16px 17px;text-align:left;cursor:pointer;transition:.15s ease
-    }
-    .answer{background:var(--accent-soft);color:var(--text);font-size:16px;line-height:1.35;border:1px solid transparent}
-    .answer:hover{transform:translateY(-1px);border-color:var(--accent)}
-    .answer:active{transform:scale(.99)}
-    .primary{background:var(--accent);color:#fff;text-align:center;font-weight:700;font-size:17px;margin-top:20px}
-    .secondary{background:transparent;color:var(--text);text-align:center;font-weight:700;border:1px solid var(--line);margin-top:10px}
-    .result-text p{white-space:pre-line}
-    .score{display:inline-block;padding:7px 11px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:13px;margin-bottom:18px}
-    .hidden{display:none!important}
-    .fade{animation:fade .23s ease}
-    @keyframes fade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+    .answer,.primary,.secondary{width:100%;border-radius:16px;padding:16px 17px;cursor:pointer;transition:.15s ease}
+    .answer{border:1px solid transparent;background:var(--accent-soft);color:var(--text);text-align:left;font-size:16px;line-height:1.35}
+    .answer:hover{transform:translateY(-1px);border-color:var(--accent)} .answer:active{transform:scale(.99)}
+    .primary{display:block;border:0;background:var(--accent);color:#fff;text-align:center;text-decoration:none;font-weight:700;font-size:17px;margin-top:20px}
+    .secondary{border:1px solid var(--line);background:transparent;color:var(--text);text-align:center;font-weight:700;margin-top:10px}
+    .hidden{display:none!important}.fade{animation:fade .22s ease}@keyframes fade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
     .note{font-size:13px;color:var(--muted);margin-top:14px;text-align:center}
-    @media(max-width:520px){
-      .app{padding:14px 12px 24px}
-      .card{padding:20px 16px;border-radius:18px}
-      h1{font-size:29px}
-      h2{font-size:24px}
-      p{font-size:16px}
-      .answer{padding:15px}
-    }
+    @media(max-width:520px){.app{padding:14px 12px 24px}.card{padding:20px 16px;border-radius:18px}h1{font-size:29px}h2{font-size:24px}p{font-size:16px}.answer{padding:15px}}
   </style>
 </head>
 <body>
-  <main class="app">
-    <section id="start" class="card fade">
-      <div class="brand">Исследование Яны Шатуриной</div>
-      <h1>Исследуйте себя настоящую и стартаните наконец!</h1>
-      <p class="lead"><strong>Почему вы всё ещё не делаете то, чего давно хотите?</strong><br><br>Ответьте на 7 простых вопросов, чтобы понять: вы реально не готовы, задолбались по жизни или ссыте и заговариваете себе зубы?</p>
-      <button class="primary" id="startBtn">Поехали</button>
-      <div class="note">Займёт около 3 минут</div>
-    </section>
+<main class="app">
+  <section id="start" class="card fade">
+    <div class="brand">Исследование Яны Шатуриной</div>
+    <h1>Исследуйте себя настоящую и стартаните, наконец!</h1>
+    <p class="lead"><strong>Почему вы всё ещё не делаете то, чего давно хотите?</strong><br><br>Ответьте на 7 простых вопросов, чтобы понять: вы реально не готовы, задолбались по жизни, или ссыте и заговариваете себе зубы?</p>
+    <button class="primary" id="startBtn">Поехали</button>
+    <div class="note">Займёт около 3 минут</div>
+  </section>
 
-    <section id="quiz" class="hidden">
-      <div class="top">
-        <div class="brand">Диагностика</div>
-        <div id="progressLabel" class="progress-label"></div>
-      </div>
-      <div class="progress"><div id="progressBar"></div></div>
-      <div class="card fade" id="questionCard">
-        <h2 id="questionTitle"></h2>
-        <div class="answers" id="answers"></div>
-      </div>
-    </section>
+  <section id="quiz" class="hidden">
+    <div class="top"><div class="brand">Исследование</div><div id="progressLabel" class="progress-label"></div></div>
+    <div class="progress"><div id="progressBar"></div></div>
+    <div class="card fade" id="questionCard">
+      <h2 id="questionTitle"></h2>
+      <div class="answers" id="answers"></div>
+    </div>
+  </section>
 
-    <section id="result" class="card hidden fade">
-      <div class="score" id="scoreBadge"></div>
-      <h2 id="resultTitle"></h2>
-      <div class="result-text" id="resultText"></div>
-      <a class="primary" href="https://t.me/levshaturin" target="_blank" rel="noopener" style="display:block;text-decoration:none">Перейти в канал</a>
-      <button class="secondary" id="restartBtn">Пройти ещё раз</button>
-    </section>
-  </main>
+  <section id="result" class="card hidden fade">
+    <h2 id="resultTitle"></h2>
+    <div id="resultText"></div>
+    <button class="primary" id="detailsBtn">Вернуться в канал и подписаться</button>
+    <button class="secondary" id="restartBtn">Пройти ещё раз</button>
+  </section>
+</main>
 
 <script>
 const tg = window.Telegram?.WebApp;
 if (tg) { tg.ready(); tg.expand(); }
 
+const CHANNEL_URL = "https://t.me/Yana_Shaturina";
+
 const questions = [
-  {
-    title:"В чём сейчас ваш главный затуп?",
-    answers:[
-      ["Мне всё ещё мало знаний, надо купить очередные курсы.",2],
-      ["Ничего не хочу. Всё нудное и мёртвое.",1],
-      ["Понимаю, что делать, но уже задолбалась делать.",5],
-      ["Всё готово, но ссыкотно вылезти наружу.",4],
-      ["Опять пересобираю всю свою жизнь.",3]
-    ]
-  },
-  {
-    title:"Что обычно происходит с вашей живой идеей?",
-    answers:[
-      ["Делаю живую идею вылизанной и мёртвой.",1],
-      ["Упаковываю идею до потери пульса.",3],
-      ["Смотрю на профи — и сразу обесцениваю себя.",2],
-      ["Жду критики и начинаю очковать.",4],
-      ["Думаю, сколько сил понадобится, — и сдуваюсь.",5]
-    ]
-  },
-  {
-    title:"Как вы обращаетесь со своим прошлым опытом?",
-    answers:[
-      ["Ошибки помню, победы обнуляю.",4],
-      ["Считаю, что мой опыт не считается.",2],
-      ["Не понимаю, где была я, а где долг.",3],
-      ["Помню только, какой ценой всё далось.",5],
-      ["Умею многое, но не вижу общей картины.",1]
-    ]
-  },
-  {
-    title:"Что происходит, когда пора сделать реальный шаг к новой себе?",
-    answers:[
-      ["Оживаю только от странного и творческого.",1],
-      ["Пытаюсь предусмотреть вообще всё.",3],
-      ["Снова иду собирать информацию.",2],
-      ["Замираю и снова переношу на завтра.",4],
-      ["Тело выключается: тяжесть, усталость, сон.",5]
-    ]
-  },
-  {
-    title:"Чем вы чаще всего подменяете движение?",
-    answers:[
-      ["Устраиваю бесоёбство вокруг упаковки.",3],
-      ["Учусь и ищу, кто скажет, как правильно.",2],
-      ["Живу во влажных фантазиях вместо действий.",1],
-      ["Ищу одобрение или вообще закрываюсь и молчу.",4],
-      ["Занимаюсь мелочами и сливаю ресурсы.",5]
-    ]
-  },
-  {
-    title:"Что вас пугает, если перемены вдруг реально получатся?",
-    answers:[
-      ["Снова загоню живое в правильную форму.",1],
-      ["Придётся признать: я уже не ученица.",2],
-      ["Потеряю контроль над тем, что будет дальше.",3],
-      ["Меня увидят и начнут оценивать.",4],
-      ["Опять придётся тащить на себе новый уровень.",5]
-    ]
-  },
-  {
-    title:"Какая фраза бесит вас сильнее всего — возможно, потому что попадает в цель?",
-    answers:[
-      ["Вы уже готовы — но вам ссыкотно.",4],
-      ["Хватит строить — пора ехать.",3],
-      ["Вы не ленитесь — вы просто задолбались.",5],
-      ["Вы сами уводите себя от живой себя.",1],
-      ["Вы не пустое место — хватит обнулять себя.",2]
-    ]
-  }
+  {title:"В чём сейчас ваш главный затуп?",answers:[
+    ["Мне всё ещё мало знаний, надо купить очередные курсы.",2],
+    ["Ничего не хочу, всё какое-то нудное и не вдохновляет.",1],
+    ["Понимаю, что делать, но уже задолбалась делать.",5],
+    ["Всё готово, но ссыкотно вылезти наружу.",4],
+    ["Опять пересобираю всю свою жизнь.",3]
+  ]},
+  {title:"Что обычно происходит с вашей живой идеей?",answers:[
+    ["Делаю любую идею вылизанной и мёртвой.",1],
+    ["Упаковываю идею до потери пульса, стремясь к совершенству.",3],
+    ["Смотрю на профи - и сразу обесцениваю себя.",2],
+    ["Жду критики наблюдателей и начинаю очковать.",4],
+    ["Думаю, сколько сил понадобится - и сразу жалею себя и сдуваюсь.",5]
+  ]},
+  {title:"Как вы обращаетесь со своим прошлым опытом?",answers:[
+    ["Ошибки помню все, а победы часто обнуляю.",4],
+    ["Считаю, что мой опыт не считается - его недостаточно.",2],
+    ["Я хз, что из моего старого опыта вообще важно сейчас.",3],
+    ["Помню только, какой ценой всё далось.",5],
+    ["Много чего умею, но общей картины не вижу.",1]
+  ]},
+  {title:"Что происходит, когда пора сделать реальный шаг к новой себе?",answers:[
+    ["Оживаю только от странного и творческого.",1],
+    ["Пытаюсь предусмотреть вообще всё.",3],
+    ["Снова и снова иду собирать информацию.",2],
+    ["Замираю, отвлекаюсь на другие \"важные\" дела и снова переношу на завтра.",4],
+    ["Тело выключается: тяжесть, усталость, апатия, сон.",5]
+  ]},
+  {title:"Чем вы чаще всего подменяете движение?",answers:[
+    ["Устраиваю бесоёбство вокруг упаковки.",3],
+    ["Учусь снова и снова и ищу, кто скажет, как правильно.",2],
+    ["Фантазирую и прокрастинирую вместо того, чтобы действовать.",1],
+    ["Ищу одобрение или вообще закрываюсь и молчу.",4],
+    ["Занимаюсь какими-то мелочами и сливаю ресурсы.",5]
+  ]},
+  {title:"Что вас пугает в том, что перемены реально получатся?",answers:[
+    ["Снова загоню живое и творческое в правильную и жёсткую форму.",1],
+    ["Придётся признать: я уже не ученица.",2],
+    ["Потеряю контроль над тем, что будет дальше.",3],
+    ["Меня увидят и начнут оценивать (о Боже).",4],
+    ["Опять придётся засунуть себя в новый уровень сложности.",5]
+  ]},
+  {title:"Какая фраза бесит вас сильнее всего - возможно, потому что попадает в цель?",answers:[
+    ["Вы уже готовы - но вам ссыкотно.",4],
+    ["Хватит планировать - пора действовать.",3],
+    ["Вы не ленитесь - вы просто задолбались.",5],
+    ["Вы сами заговариваете себе зубы и отдаляетесь от себя настоящей.",1],
+    ["Вы не пустое место - хватит уже обнулять себя.",2]
+  ]}
 ];
 
 const results = [
-  {
-    min:7,max:12,
-    title:"У вас не столько кризис жанра, сколько временная каша в голове.",
-    text:`Похоже, вы не столько очкуете перед чем-то новым, выгорели или вдруг потеряли себя — сколько пока ещё действительно не разложили всё по полкам в своей голове.
-
-Там очень много идей, плановых и импульсивных желаний, начатых и брошенных дел — и куча вариантов развития событий.
-
-Поэтому может казаться, будто вы опять топчетесь на месте, хотя якобы для новой реализации всё в ваших руках.
-
-Но проблема может быть вполне земной и технической: непонятно, что уже готово, а что реально нужно доделать.
-
-Вам сейчас не нужен очередной курс, волшебный пендель или влажные фантазии о новой жизни.
-
-Нужно трезвое исследование ситуации: что у вас уже есть, чего объективно не хватает и какой первый шаг по направлению к себе новой можно сделать без шаманских танцев с бубном.`
-  },
-  {
-    min:13,max:18,
-    title:"Ну, блин, вы просто взяли и на ровном месте обесценили весь свой путь.",
-    text:`Похоже, вы смотрите на себя так, будто начинаете совсем с нуля.
-
-Прошлый опыт кажется не тем, не серьёзным, не достойным.
-
-Достижения — случайными, знания — недостаточными, а чужой путь почему-то выглядит убедительнее вашего. Особенно нервирует чужая точка Б по сравнению с вашей точкой А.
-
-Но проблема не в том, что вам нечего предъявить этому миру — вы просто пока не собрали в одну картину всё, что уже умеете, понимаете и можете дать другим.
-
-Из-за этого новый шаг кажется гораздо страшнее, чем он есть на самом деле.
-
-Вам сейчас важно не бежать за очередными знаниями, а присвоить наконец себе свой же опыт: увидеть его ценность и понять, как перевести его в новый этап жизни, проект или новую профессию.`
-  },
-  {
-    min:19,max:24,
-    title:"Вы слишком долго готовитесь вместо того, чтобы уже жить и кайфовать.",
-    text:`Похоже, вы всё-таки не стоите на месте: думаете, анализируете, собираете информацию, пересобираете, уточняете, постоянно ищете правильную форму.
-
-Со стороны даже кажется, что работа не просто идёт, а прям кипит и бурлит.
-
-Но суть в том, что подготовка уже стала безопасной заменой реального шага.
-
-Вы хотите сначала всё понять, предусмотреть и красиво упаковать, тем самым постепенно уводя себя всё дальше от действия.
-
-В какой-то момент вы со своей идеей на пару теряете энергию и успеваете задолбаться ещё до того, как что-то действительно произошло.
-
-Вам сейчас важно не придумывать ещё более правильный путь, а выбрать одну достаточно хорошую версию и проверить её в жизни, отбросив лишнюю шелуху и мыслемешалку.`
-  },
-  {
-    min:25,max:30,
-    title:"Вы уже готовы, но вам просто страшно стать реальной.",
-    text:`Похоже, дело уже не в знаниях, опыте или технических недоделках — ведь основная часть обновлённой версии себя уже собрана.
-
-Но пока она существует только внутри вас и тщательно охраняется внутренним контроллёром.
-
-Идея — идеальная, вы — глубокая, талантливая и перспективная.
-
-Вот только никто этого не знает, не понимает и не может ни выбрать, ни подержать в руках, ни купить.
-
-Здесь поменяет всё только реальный шаг вперёд — вы станете наконец видимой.
-
-Но тогда будет чужая реакция или… тишина.
-
-И вот этого места вы, похоже, избегаете со страшной силой.
-
-Поймите наконец: вы уже давно подошли к моменту, когда подготовка заканчивается, а настоящая жизнь начинается.
-
-Вам сейчас важно не ждать, пока стеснение вдруг пропадёт само по себе, а сделать один внешний шаг: заявить о себе, озвучить желания, назвать решения, показать работу и сформировать цену.`
-  },
-  {
-    min:31,max:35,
-    title:"Вы реально не тупите — вы просто задолбались.",
-    text:`Похоже, вы слишком долго и много тащили на себе, думали, готовились, постоянно переделывали и улучшали — и пытались заставить себя быть в строю.
-
-Сейчас дело уже не в лени и не в нехватке дисциплины.
-
-У вас просто мало сил, а то, чего раньше хотелось неистово и яростно, перестало радовать. Поэтому новый шаг больше не кажется интересным и вдохновляющим — он ощущается ещё одной тяжёлой и изматывающей задачей.
-
-Вам сейчас важно не давить на себя ещё сильнее, призывая к силе воли и собранности, а разобраться: чего вы действительно хотите, что забирает ваши силы и от чего можно отказаться.
-
-И только потом решать, куда двигаться дальше. Не на последнем издыхании из ощущения дефицита сил, а из нормального живого состояния.`
-  }
+  {min:7,max:12,title:"У вас не столько кризис жанра, сколько временная каша в голове.",paragraphs:[
+    "Похоже, вы не столько очкуете перед чем-то новым, выгорели или вдруг потеряли себя - сколько пока ещё действительно не разложили всё по полкам в своей голове.",
+    "Там очень много идей, плановых и импульсивных желаний, начатых и брошенных дел - и куча вариантов развития событий.",
+    "Поэтому может казаться, будто вы опять топчетесь на месте - хотя ЯКОБЫ для новой реализации всё в ваших руках.",
+    "Но проблема может быть вполне земной и технической: непонятно, что уже готово, а что реально НУЖНО доделать.",
+    "Вам сейчас НЕ НУЖЕН очередной курс, волшебный пендель или влажные фантазии о новой жизни.",
+    "Нужно трезвое исследование ситуации: что у вас уже есть, чего объективно не хватает и какой первый шаг по направлению к себе новой можно сделать без шаманских танцев с бубном."
+  ]},
+  {min:13,max:18,title:"Ну, блин, вы просто взяли и на ровном месте обесценили весь свой путь.",paragraphs:[
+    "Похоже, вы смотрите на себя так, будто начинаете совсем с нуля.",
+    "Прошлый опыт кажется не тем, не серьёзным, не достойным.",
+    "Достижения - случайными, знания - недостаточными, а чужой путь почему-то выглядит убедительнее вашего (особенно нервирует чужая точка Б по сравнению с вашей точкой А).",
+    "Но проблема не в том, что вам нечего предъявить этому миру - вы просто пока не собрали в одну картину всё, что уже умеете, понимаете и можете дать другим.",
+    "Из-за этого новый шаг кажется гораздо страшнее, чем он есть на самом деле.",
+    "Вам сейчас важно не бежать за очередными знаниями, а присвоить, наконец, себе свой же опыт: увидеть его ценность и понять, как перевести его в новый этап жизни, проект или новую профессию."
+  ]},
+  {min:19,max:24,title:"Вы слишком долго готовитесь вместо того, чтобы уже жить и кайфовать.",paragraphs:[
+    "Похоже, вы все-таки не стоите на месте: думаете, анализируете, собираете информацию, пересобираете, уточняете, постоянно ищете правильную форму.",
+    "Со стороны даже кажется, что работа не просто идёт, а прям кипит и бурлит.",
+    "Но суть в том, что подготовка уже стала безопасной заменой реального шага.",
+    "Вы хотите сначала всё понять, предусмотреть и красиво упаковать, тем самым постепенно уводя себя всё дальше от действия.",
+    "В какой-то момент вы со своей идеей на пару теряете энергию, и успеваете задолбаться ещё до того, как что-то действительно произошло.",
+    "Вам сейчас важно не придумывать ещё более правильный путь, а выбрать одну достаточно хорошую версию и проверить её в жизни, отбросив лишнюю шелуху и мыслемешалку."
+  ]},
+  {min:25,max:30,title:"Вы уже готовы, но вам просто страшно вылезти наружу и стать реальной.",paragraphs:[
+    "Похоже, дело уже давно не в знаниях, опыте или технических недоделках - ведь основная часть обновленной версии себя уже СОБРАНА!",
+    "Но пока она существует только внутри вас и тщательно охраняется жёстким и беспрецедентным внутренним судьёй.",
+    "Ваши идеи - идеальные, а вы - глубокая, талантливая и перспективная.",
+    "Вот, правда, никто этого не знает, не понимает и не может ни выбрать, ни подержать в руках, ни купить.",
+    "Здесь поменяет всё только реальный шаг вперёд - и вы станете, наконец, видимой.",
+    "НО!!! Ведь тогда будет и ЧУЖАЯ реакция или... тишина.",
+    "И вот этого места вы, похоже, и избегаете со страшной силой.",
+    "Но поймите, наконец - вы уже давно подошли к моменту, когда подготовка заканчивается, а настоящая жизнь начинается!",
+    "Вам сейчас важно не ждать, пока стеснение вдруг пропадёт сама по себе - а сделать ОДИН ВНЕШНИЙ и решительный шаг: заявить о себе, гордо показывать свою работу, говорить о результатах, сформировать и озвучить цену!"
+  ]},
+  {min:31,max:35,title:"Вы реально НЕ тупите - вы просто дико задолбались.",paragraphs:[
+    "Похоже, вы слишком долго и много тащили на себе, думали, готовились, постоянно переделывали и улучшали - и пытались себя заставить быть в строю.",
+    "Сейчас дело уже не в лени и не в нехватке дисциплины.",
+    "У вас просто мало сил, а то, чего раньше хотелось неистово и яростно - перестало радовать. Поэтому новый шаг больше не кажется интересным и вдохновляющим - он ощущается ещё одной тяжёлой и изматывающей задачей.",
+    "Вам сейчас важно не давить на себя ещё сильнее сильнее, призывая к силе воли и собранности, а разобраться: чего вы действительно хотите, а что забирает ваши силы - и от чего можно отказаться.",
+    "И только потом решать - куда двигаться дальше. Не на последнем издыхании из ощущения дефицита сил - а из нормального живого состояния."
+  ]}
 ];
 
-let current = 0;
-let score = 0;
+let current=0,score=0;
+const start=document.getElementById("start"),quiz=document.getElementById("quiz"),result=document.getElementById("result");
+const questionTitle=document.getElementById("questionTitle"),answers=document.getElementById("answers");
+const progressLabel=document.getElementById("progressLabel"),progressBar=document.getElementById("progressBar"),questionCard=document.getElementById("questionCard");
+const resultTitle=document.getElementById("resultTitle"),resultText=document.getElementById("resultText");
 
-const start = document.getElementById("start");
-const quiz = document.getElementById("quiz");
-const result = document.getElementById("result");
-const qTitle = document.getElementById("questionTitle");
-const answersBox = document.getElementById("answers");
-const progressLabel = document.getElementById("progressLabel");
-const progressBar = document.getElementById("progressBar");
-const questionCard = document.getElementById("questionCard");
-
-document.getElementById("startBtn").addEventListener("click", () => {
-  start.classList.add("hidden");
-  quiz.classList.remove("hidden");
-  renderQuestion();
-});
-
-document.getElementById("restartBtn").addEventListener("click", () => {
-  current = 0; score = 0;
-  result.classList.add("hidden");
-  start.classList.remove("hidden");
-});
+document.getElementById("startBtn").addEventListener("click",()=>{start.classList.add("hidden");quiz.classList.remove("hidden");renderQuestion()});
+document.getElementById("restartBtn").addEventListener("click",()=>{current=0;score=0;result.classList.add("hidden");start.classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"})});
+document.getElementById("detailsBtn").addEventListener("click",()=>{if(tg?.close){tg.close()}else{window.open(CHANNEL_URL,"_blank")}});
 
 function renderQuestion(){
-  const q = questions[current];
-  progressLabel.textContent = `${current + 1} из ${questions.length}`;
-  progressBar.style.width = `${((current + 1) / questions.length) * 100}%`;
-  qTitle.textContent = q.title;
-  answersBox.innerHTML = "";
-  q.answers.forEach(([text, points]) => {
-    const btn = document.createElement("button");
-    btn.className = "answer";
-    btn.textContent = text;
-    btn.addEventListener("click", () => choose(points));
-    answersBox.appendChild(btn);
-  });
-  questionCard.classList.remove("fade");
-  void questionCard.offsetWidth;
-  questionCard.classList.add("fade");
+  const q=questions[current];
+  progressLabel.textContent=`${current+1} из ${questions.length}`;
+  progressBar.style.width=`${((current+1)/questions.length)*100}%`;
+  questionTitle.textContent=q.title; answers.innerHTML="";
+  q.answers.forEach(([text,points])=>{const b=document.createElement("button");b.className="answer";b.textContent=text;b.addEventListener("click",()=>{score+=points;current++;if(current<questions.length)renderQuestion();else showResult()});answers.appendChild(b)});
+  questionCard.classList.remove("fade");void questionCard.offsetWidth;questionCard.classList.add("fade");window.scrollTo({top:0,behavior:"smooth"})
 }
-
-function choose(points){
-  score += points;
-  current++;
-  if(current < questions.length) renderQuestion();
-  else showResult();
-}
-
 function showResult(){
   quiz.classList.add("hidden");
-  const r = results.find(x => score >= x.min && score <= x.max) || results[0];
-  document.getElementById("scoreBadge").textContent = `${score} баллов`;
-  document.getElementById("resultTitle").textContent = r.title;
-  const container = document.getElementById("resultText");
-  container.innerHTML = "";
-  r.text.split("\n\n").forEach(t => {
-    const p = document.createElement("p");
-    p.textContent = t;
-    container.appendChild(p);
-  });
-  result.classList.remove("hidden");
-  window.scrollTo({top:0,behavior:"smooth"});
+  const r=results.find(x=>score>=x.min&&score<=x.max)||results[0];
+  resultTitle.textContent=r.title;resultText.innerHTML="";
+  r.paragraphs.forEach(t=>{const p=document.createElement("p");p.textContent=t;resultText.appendChild(p)});
+  result.classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"})
 }
 </script>
 </body>
