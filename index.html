@@ -168,7 +168,7 @@ const resultTitle=document.getElementById("resultTitle"),resultText=document.get
 
 document.getElementById("startBtn").addEventListener("click",()=>{start.classList.add("hidden");quiz.classList.remove("hidden");renderQuestion()});
 document.getElementById("restartBtn").addEventListener("click",()=>{current=0;score=0;result.classList.add("hidden");start.classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"})});
-document.getElementById("detailsBtn").addEventListener("click",()=>{if(tg?.close){tg.close()}else{window.open(CHANNEL_URL,"_blank")}});
+document.getElementById("detailsBtn").addEventListener("click",()=>{if(tg?.openTelegramLink){tg.openTelegramLink(CHANNEL_URL)}else{window.location.href=CHANNEL_URL}});
 
 function renderQuestion(){
   const q=questions[current];
