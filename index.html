@@ -6,29 +6,98 @@
   <title>Исследование Яны Шатуриной</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
-    :root{--bg:#f7f7f4;--card:#fff;--text:#171717;--muted:#74716b;--line:#e5e3dc;--accent:#2298a5;--accent-soft:#e9f6f7}
-    *{box-sizing:border-box} html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:var(--tg-theme-bg-color,var(--bg));color:var(--tg-theme-text-color,var(--text))}
-    body{min-height:100vh} button,a{font:inherit}
-    .app{width:min(100%,680px);margin:0 auto;min-height:100vh;padding:18px 16px 32px}
-    .top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
-    .brand{font-size:13px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}
-    .progress-label{font-size:13px;color:var(--muted)}
-    .progress{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:22px}
-    .progress>div{height:100%;width:0;background:var(--accent);transition:width .2s ease}
-    .card{background:var(--tg-theme-secondary-bg-color,var(--card));border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 8px 28px rgba(0,0,0,.05)}
-    h1,h2{margin:0 0 16px;line-height:1.1} h1{font-size:34px} h2{font-size:27px}
-    p{font-size:17px;line-height:1.55;margin:0 0 15px}
-    .lead{font-size:19px;color:var(--muted);line-height:1.6}.lead strong{color:var(--text);font-size:21px;line-height:1.4}.start-brand{margin-bottom:18px}.result-kicker{font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
-    .answers{display:grid;gap:11px;margin-top:22px}
-    .answer,.primary,.secondary{width:100%;border-radius:16px;padding:16px 17px;cursor:pointer;transition:.15s ease}
-    .answer{border:1px solid transparent;background:var(--accent-soft);color:var(--text);text-align:left;font-size:16px;line-height:1.35}
-    .answer:hover{transform:translateY(-1px);border-color:var(--accent)} .answer:active{transform:scale(.99)}
-    .primary{display:block;border:0;background:var(--accent);color:#fff;text-align:center;text-decoration:none;font-weight:700;font-size:17px;margin-top:20px}
-    .secondary{border:1px solid var(--line);background:transparent;color:var(--text);text-align:center;font-weight:700;margin-top:10px}
-    .hidden{display:none!important}.fade{animation:fade .22s ease}@keyframes fade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
-    .note{font-size:13px;color:var(--muted);margin-top:14px;text-align:center}
-    @media(max-width:520px){.app{padding:14px 12px 24px}.card{padding:20px 16px;border-radius:18px}h1{font-size:29px}h2{font-size:24px}p{font-size:16px}.answer{padding:15px}}
-  </style>
+:root{
+  --bg:#f7f7f4;
+  --card:#ffffff;
+  --text:#171717;
+  --muted:#74716b;
+  --line:#e5e3dc;
+  --accent:#2298a5;
+  --accent-soft:#e9f6f7;
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  min-height:100%;
+  font-family:Tahoma,Geneva,sans-serif;
+  background:var(--tg-theme-bg-color,var(--bg));
+  color:var(--tg-theme-text-color,var(--text));
+}
+body{min-height:100vh}
+button,a{font:inherit}
+.app{
+  width:min(100%,680px);
+  margin:0 auto;
+  min-height:100vh;
+  padding:calc(78px + env(safe-area-inset-top)) 16px calc(32px + env(safe-area-inset-bottom));
+}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+.brand{font-size:13px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--tg-theme-hint-color,var(--muted))}
+.progress-label{font-size:13px;color:var(--tg-theme-hint-color,var(--muted))}
+.progress{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:22px}
+.progress>div{height:100%;width:0;background:var(--accent);transition:width .2s ease}
+.card{
+  background:var(--tg-theme-secondary-bg-color,var(--card));
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:24px;
+  box-shadow:0 8px 28px rgba(0,0,0,.05);
+}
+h1,h2{margin:0 0 16px;line-height:1.1;color:var(--tg-theme-text-color,var(--text))}
+h1{font-size:34px}
+h2{font-size:27px}
+p{font-size:17px;line-height:1.55;margin:0 0 15px;color:var(--tg-theme-text-color,var(--text))}
+.lead{font-size:19px;color:var(--tg-theme-hint-color,var(--muted));line-height:1.6}
+.lead strong{color:var(--tg-theme-text-color,var(--text));font-size:21px;line-height:1.4}
+.start-brand{margin-bottom:18px}
+.result-kicker{font-size:14px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--tg-theme-hint-color,var(--muted));margin-bottom:18px}
+.answers{display:grid;gap:11px;margin-top:22px}
+.answer,.primary,.secondary{width:100%;border-radius:16px;padding:16px 17px;cursor:pointer;transition:.15s ease}
+.answer{border:1px solid transparent;background:var(--accent-soft);color:#171717;text-align:left;font-size:16px;line-height:1.35}
+.answer:hover{transform:translateY(-1px);border-color:var(--accent)}
+.answer:active{transform:scale(.99)}
+.primary{
+  display:block;
+  border:0;
+  background:var(--accent);
+  color:#fff;
+  text-align:center;
+  text-decoration:none;
+  font-weight:700;
+  font-size:17px;
+  margin-top:20px;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.95),inset 0 0 0 4px rgba(34,152,165,.95);
+}
+.secondary{border:1px solid var(--line);background:transparent;color:var(--tg-theme-text-color,var(--text));text-align:center;font-weight:700;margin-top:10px}
+.hidden{display:none!important}
+.fade{animation:fade .22s ease}
+@keyframes fade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.note{font-size:13px;color:var(--tg-theme-hint-color,var(--muted));margin-top:14px;text-align:center}
+
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#111315;
+    --card:#1b1e21;
+    --text:#f4f4f4;
+    --muted:#b7bbc0;
+    --line:#34383d;
+    --accent:#2aa6b4;
+    --accent-soft:#dff4f6;
+  }
+  .card{box-shadow:0 8px 28px rgba(0,0,0,.28)}
+}
+
+@media(max-width:520px){
+  .app{
+    padding:calc(74px + env(safe-area-inset-top)) 12px calc(24px + env(safe-area-inset-bottom));
+  }
+  .card{padding:20px 16px;border-radius:18px}
+  h1{font-size:29px}
+  h2{font-size:24px}
+  p{font-size:16px}
+  .answer{padding:15px}
+}
+</style>
 </head>
 <body>
 <main class="app">
