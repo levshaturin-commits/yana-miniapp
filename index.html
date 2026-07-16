@@ -48,6 +48,23 @@ h1{font-size:34px}
 h2{font-size:27px}
 p{font-size:17px;line-height:1.55;margin:0 0 15px;color:var(--tg-theme-text-color,var(--text))}
 .lead{font-size:19px;color:var(--tg-theme-hint-color,var(--muted));line-height:1.6}
+.intro-check p{margin:0 0 12px}
+.intro-check ul{
+  margin:0 0 10px;
+  padding-left:22px;
+}
+.intro-check li{
+  margin:0 0 9px;
+  line-height:1.48;
+}
+.intro-check li::marker{
+  color:var(--accent);
+}
+.intro-check .intro-or{
+  margin:4px 0 10px;
+  font-weight:600;
+  color:var(--tg-theme-text-color,var(--text));
+}
 .lead strong{color:var(--tg-theme-text-color,var(--text));font-size:21px;line-height:1.4}
 .start-brand{margin-bottom:18px}
 .trigger-box{
@@ -221,7 +238,17 @@ p{font-size:17px;line-height:1.55;margin:0 0 15px;color:var(--tg-theme-text-colo
       </div>
     </div>
 
-    <p class="lead">Ответьте на 7 простых вопросов, чтобы понять: вы реально не готовы, задолбались по жизни, или ссыте и заговариваете себе зубы?</p>
+    <div class="lead intro-check">
+      <p>Ответьте на 7 простых вопросов, чтобы понять:</p>
+      <ul>
+        <li>вы реально технически не готовы к переменам?</li>
+        <li>вы очень устали и никак не можете восстановить ресурс?</li>
+      </ul>
+      <p class="intro-or">или же</p>
+      <ul>
+        <li>вы всё ещё не можете поверить в собственную значимость?</li>
+      </ul>
+    </div>
     <button class="primary" id="startBtn">Поехали</button>
     <div class="note">Займёт около 3 минут</div>
   </section>
