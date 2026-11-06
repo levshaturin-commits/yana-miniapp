@@ -1,0 +1,6 @@
+{
+  "name": "yana-miniapp",
+  "private": true,
+  "scripts": {"test": "node --test tests/engine.test.cjs", "test:browser": "node tests/browser.cjs"},
+  "devDependencies": {"playwright": "1.62.1"}
+}

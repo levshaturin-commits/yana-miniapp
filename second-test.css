@@ -1,0 +1,32 @@
+#testChooser, #secondTest {
+  --accent:#89161c;
+  --accent-soft:#f7edef;
+  --wine-control:#89161c;
+}
+#testChooser .secondary, #secondTest .secondary {
+  border-color:var(--wine-control);
+  color:var(--wine-control);
+}
+#testChooser .restart-link, #secondTest .restart-link {color:var(--wine-control)}
+@media(prefers-color-scheme:dark) {
+  #testChooser, #secondTest {--wine-control:#e6a0a6}
+}
+#testChooser h1, #secondTest h1 {overflow-wrap:break-word}
+#secondTest fieldset {border:0;padding:0;margin:0;min-width:0}
+#secondTest legend {font-size:27px;font-weight:700;line-height:1.2;padding:0;margin-bottom:4px}
+#secondTest .answer {display:flex;align-items:flex-start;gap:12px;cursor:pointer}
+#secondTest .answer:hover, #secondTest .answer:active {transform:none}
+#secondTest .answer:has(input:checked) {border-color:var(--accent);outline:1px solid var(--accent)}
+#secondTest input {flex-shrink:0;width:19px;height:19px;margin:1px 0 0;accent-color:var(--accent)}
+#secondTest button:disabled {opacity:.45;cursor:not-allowed}
+#secondTest :focus-visible, #testChooser :focus-visible {outline:3px solid var(--accent);outline-offset:4px}
+#secondTest .result-body section + section {border-top:1px solid var(--line);margin-top:24px;padding-top:24px}
+#secondTest .technical-note {font-size:14px;line-height:1.5;color:var(--tg-theme-hint-color,var(--muted));margin-top:20px}
+#secondTest a {overflow-wrap:anywhere;color:var(--tg-theme-link-color,var(--accent))}
+#secondTest a.primary {color:#fff}
+#secondTest .funnel {border-top:1px solid var(--line);margin-top:28px;padding-top:24px}
+#secondTest .funnel > p {font-style:italic}
+#secondTest .funnel-arrow {text-align:center;font-size:22px;line-height:1;color:var(--wine-control);margin:4px 0 8px}
+#secondTest .funnel-arrow + .primary {margin-top:0}
+@media(max-width:520px) {#secondTest legend {font-size:24px}}
+@media(prefers-reduced-motion:reduce) {#secondTest *, #testChooser * {animation:none;transition:none;scroll-behavior:auto}}

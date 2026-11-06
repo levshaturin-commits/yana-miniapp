@@ -221,8 +221,18 @@ p{font-size:17px;line-height:1.55;margin:0 0 15px;color:var(--tg-theme-text-colo
   .result-divider{margin:24px 0 20px}
 }
 </style>
+<link rel="stylesheet" href="second-test.css">
 </head>
 <body>
+<main id="testChooser" class="app hidden">
+  <section class="card fade">
+    <div class="brand start-brand">Yana_Shaturina</div>
+    <h1>Выберите тест</h1>
+    <button id="chooseFirst" class="primary">Исследование вашей уникальности</button>
+    <button id="chooseSecond" class="secondary">Чем вам заняться дальше?</button>
+  </section>
+</main>
+<main id="secondTest" class="app hidden"></main>
 <main class="app">
   <section id="start" class="card fade">
     <div class="brand start-brand">Исследование вашей уникальности</div>
@@ -319,5 +329,9 @@ function showResult(){
   result.classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"})
 }
 </script>
+<script src="second-test-content.js"></script>
+<script src="second-test-engine.js"></script>
+<script src="funnel-config.js"></script>
+<script src="second-test-ui.js"></script>
 </body>
 </html>
