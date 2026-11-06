@@ -12,7 +12,8 @@ const out=process.env.QA_OUTPUT_DIR;
 const errors=[];
 const server=http.createServer((req,res)=>{
   if(req.url==='/baseline.html'){res.setHeader('Content-Type','text/html; charset=utf-8');return res.end(baseline);}
-  const name=req.url==='/'?'index.html':req.url.slice(1).split('?')[0];
+  const pathname=new URL(req.url,'http://localhost').pathname;
+  const name=pathname==='/'?'index.html':pathname.slice(1);
   if(!/^[\w.-]+$/.test(name)){res.statusCode=404;return res.end();}
   try {res.setHeader('Content-Type',name.endsWith('.js')?'text/javascript; charset=utf-8':name.endsWith('.css')?'text/css; charset=utf-8':'text/html; charset=utf-8');res.end(fs.readFileSync(path.join(root,name)));}
   catch {res.statusCode=404;res.end();}
