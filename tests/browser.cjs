@@ -28,7 +28,9 @@ async function complete(page,answers) {
     await page.getByRole('button',{name:i===9?'Посмотреть результат':'Далее',exact:true}).click();
   }
   assert.deepEqual(await page.locator('#secondTest .result-body h2').allTextContents(),interpret([...answers]).sections.map(s=>s.title));
-  assert.deepEqual(await page.locator('#secondTest .result-body p').allTextContents(),interpret([...answers]).sections.flatMap(s=>s.paragraphs));
+  assert.deepEqual(await page.locator('#secondTest .result-body section').evaluateAll(nodes=>nodes.map(node=>Array.from(node.querySelectorAll('p')).map(p=>p.textContent).join(' '))),interpret([...answers]).sections.map(s=>s.paragraphs.join(' ')));
+  assert.equal(await page.locator('#secondTest .result-summary strong').count(),4);
+  assert.equal(await page.getByRole('button',{name:'К выбору теста',exact:true}).count(),0);
   await noOverflow(page);
 }
 (async()=>{
@@ -51,7 +53,8 @@ async function complete(page,answers) {
       await page.goto(base+'/'+entry.query);
       await page.locator(entry.second?'#secondTest':entry.first?'#start':'#testChooser').waitFor({state:'visible'});
       if(entry.second) {
-        await page.getByRole('button',{name:'К выбору теста',exact:true}).click();
+        assert.equal(await page.getByRole('button',{name:'К выбору теста',exact:true}).count(),0);
+        await page.evaluate(()=>location.hash='');
         await page.locator('#chooseFirst').click();await page.locator('#start').waitFor({state:'visible'});
       }
       await page.close();
@@ -84,7 +87,9 @@ async function complete(page,answers) {
       await complete(page,'BBACAAADAB');
       assert.equal(await page.locator('#secondTest a.primary').getAttribute('href'),'https://t.me/Yana_Shaturina/60');
       assert.equal(await page.locator('#secondTest a.primary').innerText(),'В ЭТОМ ПОСТЕ');
-      assert.equal(await page.locator('#secondTest .funnel > p').count(),2);
+      assert.equal(await page.locator('#secondTest .funnel > p').count(),3);
+      assert.ok((await page.locator('#secondTest .funnel > p').nth(1).innerText()).startsWith('Для более подробного разбора'));
+      assert.ok((await page.locator('#secondTest .funnel > p strong').innerText()).startsWith('Подробнее обо мне'));
       if(out && width===375) await page.screenshot({path:path.join(out,'second-result-dark.png'),fullPage:true});
       assert.equal(await page.getByRole('button',{name:'Изменить ответы',exact:true}).count(),0);
       assert.equal(await page.locator('#secondTest .question-jump').count(),0);
@@ -94,7 +99,7 @@ async function complete(page,answers) {
         assert.equal(await page.locator('input:checked').count(),0);await complete(page,answers);
       }
       // Switch through the chooser while both tests have meaningful state.
-      await page.getByRole('button',{name:'К выбору теста',exact:true}).click();await page.locator('#chooseFirst').click();
+      await page.evaluate(()=>location.hash='');await page.locator('#chooseFirst').click();
       await page.locator('#startBtn').click();await page.locator('#answers button').first().click();
       const firstState=await page.evaluate(()=>({current,score}));
       await page.evaluate(()=>location.hash='');await page.locator('#chooseSecond').click();
