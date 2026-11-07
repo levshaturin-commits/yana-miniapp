@@ -85,7 +85,7 @@ async function complete(page,answers) {
       await page.locator('input[value="B"]').check();await page.getByRole('button',{name:'Далее',exact:true}).click();
       await page.getByRole('button',{name:'Назад',exact:true}).click();assert.ok(await page.locator('input[value="B"]').isChecked());
       await complete(page,'BBACAAADAB');
-      assert.equal(await page.locator('#secondTest a.primary').getAttribute('href'),'https://t.me/Yana_Shaturina/60');
+      assert.equal(await page.locator('#secondTest a.primary').getAttribute('href'),'https://t.me/Yana_Shaturina/573');
       assert.equal(await page.locator('#secondTest a.primary').innerText(),'В ЭТОМ ПОСТЕ');
       assert.equal(await page.locator('#secondTest .funnel > p').count(),3);
       assert.ok((await page.locator('#secondTest .funnel > p').nth(1).innerText()).startsWith('Для более подробного разбора'));
@@ -122,12 +122,12 @@ async function complete(page,answers) {
     // Exercise the approved funnel configuration, without opening a real Telegram session.
     await page.getByRole('button',{name:'Начать',exact:true}).click();await complete(page,'DDBDCDDADC');
     await page.locator('#secondTest a.primary').click();assert.equal((await page.evaluate(()=>window.calls)).length,3);
-    assert.equal((await page.evaluate(()=>window.calls)).at(-1),'https://t.me/Yana_Shaturina/60');
+    assert.equal((await page.evaluate(()=>window.calls)).at(-1),'https://t.me/Yana_Shaturina/573');
     assert.equal(await page.locator('#secondTest .funnel .technical-note').count(),0);
     assert.equal(await page.locator('#secondTest .funnel a').count(),1);
     await page.route('https://t.me/**',route=>route.fulfill({body:'navigation fixture'}));
     await page.evaluate(()=>window.failTelegram=true);await page.locator('#secondTest a.primary').click();
-    await page.waitForURL('https://t.me/Yana_Shaturina/60');
+    await page.waitForURL('https://t.me/Yana_Shaturina/573');
     console.log('PASS Telegram mock: exact legacy/new URLs, only the approved CTA, navigation after API exception');
     await ctx.close();
     assert.deepEqual(errors,[]);console.log('PASS no JavaScript errors');
