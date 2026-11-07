@@ -1,6 +1,6 @@
 // URL and button from the user's guide; adapted copy approved in this task.
 window.SECOND_TEST_FUNNEL = {
-  url: 'https://t.me/Yana_Shaturina/60',
+  url: 'https://t.me/Yana_Shaturina/573',
   label: 'В ЭТОМ ПОСТЕ',
   paragraphs: [
     'Ответы помогают заметить, на что можно опереться и что стоит исследовать дальше.',
