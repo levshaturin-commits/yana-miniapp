@@ -69,16 +69,32 @@
       catch {state.index=Math.max(0,state.answers.findIndex(answer=>!answer));state.screen='question';render();return;}
       card.append(element('div','Результат','result-kicker'));
       const body=element('div',null,'result-body');
-      result.sections.forEach(section=>{
+      // Emphasize existing conclusions without rewriting or duplicating result text.
+      const lastSentence=text=>text.split(/(?<=[.!?])\s+/).at(-1);
+      const highlights=[
+        `${lastSentence(content.priority[state.answers[1]])} ${content.criterion[state.answers[4]]}`,
+        lastSentence(content.demandEvidence[state.answers[7]]),
+        content.decisionStyle[state.answers[5]],
+        content.behaviorAction[state.answers[6]]
+      ];
+      result.sections.forEach((section,index)=>{
         const node=element('section');node.append(element('h2',section.title));
-        section.paragraphs.forEach(text=>node.append(element('p',text)));body.append(node);
+        section.paragraphs.forEach(text=>{
+          const highlight=highlights[index];
+          if(text.endsWith(highlight)) {
+            const preceding=text.slice(0,-highlight.length).trimEnd();
+            if(preceding) node.append(element('p',preceding));
+            const summary=element('p',null,'result-summary');
+            summary.append(element('strong',highlight));node.append(summary);
+          } else node.append(element('p',text));
+        });body.append(node);
       });card.append(body);
       appendFunnel(card);
       card.append(button('Пройти ещё раз',()=>{
         card.replaceChildren(element('p','Сбросить ответы второго теста и начать заново?'),button('Начать заново',reset,'primary'),button('Отмена',render));
       },'restart-link'));
     }
-    host.append(card,button('К выбору теста',()=>go(''),'restart-link'));
+    host.append(card);
     window.scrollTo(0,0);
     const heading=host.querySelector('h1,legend,h2');
     if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}
@@ -93,7 +109,12 @@
     }
     const funnel=element('div',null,'funnel');
     if (Array.isArray(config.paragraphs)) {
-      config.paragraphs.filter(text=>typeof text==='string').forEach(text=>funnel.append(element('p',text)));
+      config.paragraphs.filter(text=>typeof text==='string').forEach(text=>{
+        const paragraph=element('p');
+        if(text.startsWith('Подробнее обо мне')) paragraph.append(element('strong',text));
+        else paragraph.textContent=text;
+        funnel.append(paragraph);
+      });
     }
     const arrow=element('div','↓','funnel-arrow');arrow.setAttribute('aria-hidden','true');
     const cta=element('a',config.label,'primary');cta.href=config.url;
